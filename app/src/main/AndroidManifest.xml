@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.muslimguide.androidapp">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -35,8 +33,13 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".PlaceSearchActivity"/>
-        <activity android:name=".HomePage"/>
+        <activity
+            android:name=".PlaceSearchActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name=".HomePage"
+            android:exported="false"/>
 
         <uses-library
             android:name="com.google.android.maps"
@@ -45,19 +48,28 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBbYnWfoDdGCtyiR0UWBDoXZeat7y7X1Mc" />
 
-        <activity android:name=".LocationPermissionActivity">
+        <activity
+            android:name=".LocationPermissionActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FullSuraActivity"/>
-        <activity android:name=".SplashScreenActivity" />
+
+        <activity
+            android:name=".FullSuraActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name=".SplashScreenActivity"
+            android:exported="false"/>
 
         <receiver
             android:name="recever.AutoStart"
@@ -77,6 +89,7 @@
 
         <receiver
             android:name=".recever.Alarm"
+            android:exported="false"
             android:process=":remote">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
@@ -86,7 +99,9 @@
         <service
             android:name=".service.YourService"
             android:enabled="true"
+            android:exported="false"
             android:process=":your_service"/>
+
     </application>
 
 </manifest>
