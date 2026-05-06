@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.muslimguide.androidapp">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -24,8 +25,6 @@
 
     <uses-permission android:name="com.example.permission.MAPS_RECEIVE" />
 
-
-
     <application
         android:name=".App.AppController"
         android:allowBackup="true"
@@ -34,10 +33,11 @@
         android:roundIcon="@drawable/muslim_solution_logo"
         android:supportsRtl="true"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:appComponentFactory">
+
         <activity android:name=".PlaceSearchActivity"/>
-        <activity android:name=".HomePage"
-            />
+        <activity android:name=".HomePage"/>
 
         <uses-library
             android:name="com.google.android.maps"
@@ -45,8 +45,7 @@
 
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" /> <!-- api need to change -->
-        <!-- AIzaSyCbL547D56LwvtFpbLlpDDAqZD_PJOeAZY -->
+            android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBbYnWfoDdGCtyiR0UWBDoXZeat7y7X1Mc" />
@@ -55,12 +54,12 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".FullSuraActivity"/>
         <activity android:name=".SplashScreenActivity" />
+
         <receiver
             android:name="recever.AutoStart"
             android:enabled="true"
@@ -69,18 +68,17 @@
             android:process=":remote">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
+
         <receiver
             android:name=".recever.Alarm"
-            android:process=":remote" >
+            android:process=":remote">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
