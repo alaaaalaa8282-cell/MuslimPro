@@ -1,58 +1,67 @@
 plugins {
     id 'com.android.application'
-    id 'com.google.gms.google-services' version '4.4.0'
+    id 'com.google.gms.google-services'
+}
+
 android {
     compileSdk 34
-    
+
     defaultConfig {
         applicationId 'com.muslimguide.androidapp'
-        minSdk 21  // Increased from 17
-        targetSdk 34  // Updated from 29
+        minSdk 21
+        targetSdk 34
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    
+
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 }
 
 dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
     // AndroidX Core
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.google.android.material:material:1.11.0'
-    
+
     // Google Play Services
     implementation 'com.google.android.gms:play-services-location:21.0.1'
     implementation 'com.google.android.gms:play-services-maps:18.2.0'
     implementation 'com.google.android.gms:play-services-places:17.0.0'
-    
+    implementation 'com.google.android.libraries.places:places:3.3.0'
+
     // Firebase
     implementation 'com.google.firebase:firebase-core:21.1.1'
-    
-    // Networking & Parsing
+
+    // Networking
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'com.google.code.gson:gson:2.10.1'
-    
+
     // Media
-    implementation 'com.google.android.exoplayer:exoplayer:2.20.1'
+    implementation 'com.google.android.exoplayer:exoplayer:2.19.1'
     implementation 'com.squareup.picasso:picasso:2.8'
-    
+
+    // JitPack
+    implementation 'com.github.karanchuri:PermissionManager:0.1.0'
+    implementation 'com.github.jd-alexander:library:1.1.0'
+
     // Utilities
     implementation 'org.jetbrains:annotations:24.0.1'
-    
+
     // Testing
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.runner:runner:1.5.2'
