@@ -1,10 +1,10 @@
 package com.muslimguide.androidapp.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +29,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class NientyNineNameFragment extends Fragment {
 
     private View mView;
@@ -38,15 +37,13 @@ public class NientyNineNameFragment extends Fragment {
     private NinetyNine_NamesAdapter ninetyNine_namesAdapter;
     private RequestQueue requestQueue;
 
-    //private String url = "http://api.alquran.cloud/v1/surah";
-
     public NientyNineNameFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_nienty_nine_name, container, false);
+        mView = inflater.inflate(R.layout.fragment_niety_nine_name, container, false);
 
         nientyNineNameRecyclerView = mView.findViewById(R.id.nientyNineNameRecyclerView);
         ninetyNine_names = new ArrayList<>();
@@ -75,19 +72,19 @@ public class NientyNineNameFragment extends Fragment {
 
                         ninetyNine_names.add(new NinetyNine_Names(arabicName, englishName, number, enMeaning));
                         Common.ninetyNine_names.add(new NinetyNine_Names(arabicName, englishName, number, enMeaning));
-
-
                     }
+
                     ninetyNine_namesAdapter = new NinetyNine_NamesAdapter(ninetyNine_names, getContext(), new NinetyNine_NamesAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(NinetyNine_Names item, int pos) {
                             Common.number = item.getNumber();
                             Common.aribName = item.getArabicName();
                             Common.nameMeaning = item.getEnMeaning();
-                            Fragment mFragment =  new NientyNingMeaningFragment();
+                            Fragment mFragment = new NientyMeaningFragment();
                             mChangeFragment_2(mFragment);
                         }
                     });
+
                     nientyNineNameRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     nientyNineNameRecyclerView.setAdapter(ninetyNine_namesAdapter);
                     ninetyNine_namesAdapter.notifyDataSetChanged();
@@ -95,7 +92,6 @@ public class NientyNineNameFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -105,16 +101,12 @@ public class NientyNineNameFragment extends Fragment {
         });
 
         requestQueue.add(request);
-
     }
 
     public void mChangeFragment_2(Fragment fragment) {
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_nintinine, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
-
     }
-
-
 }
