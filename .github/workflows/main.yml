@@ -8,24 +8,43 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Grant execute permission
-        run: chmod +x gradlew
+      - run: chmod +x gradlew
 
-      - name: Build Debug APK
-        run: ./gradlew assembleDebug --stacktrace
+      - name: Generate Keystore
+        run: |
+          keytool -genkeypair \
+            -alias muslimpro \
+            -keyalg RSA -keysize 2048 \
+            -validity 9125 \
+            -keystore muslimpro.jks \
+            -storepass muslimpro123 \
+            -keypass muslimpro123 \
+            -dname "CN=MuslimPro,O=Islamic,C=EG" \
+            -noprompt
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
+      - name: Build APK
+        run: |
+          ./gradlew assembleRelease -x lintVitalRelease \
+            -Pandroid.injected.signing.store.file=${{ github.workspace }}/muslimpro.jks \
+            -Pandroid.injected.signing.store.password=muslimpro123 \
+            -Pandroid.injected.signing.key.alias=muslimpro \
+            -Pandroid.injected.signing.key.password=muslimpro123
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: MuslimPro-debug
-          path: app/build/outputs/apk/debug/*.apk
+          tag_name: "build-${{ github.run_number }}"
+          name: "إصدار ${{ github.run_number }}"
+          files: app/build/outputs/apk/release/*.apk
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
